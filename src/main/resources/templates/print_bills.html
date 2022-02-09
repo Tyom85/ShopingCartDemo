@@ -1,0 +1,70 @@
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Customer List</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="stylesheet" th:href="@{/css/cust_list.css}">
+    <link rel="stylesheet" th:href="@{/css/itemslist.css}">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+<body>
+<div th:insert="~{header::header}"></div>
+
+<h2 th:inline="text" class="title">Customer Name : [[${customer.cust_name}]]</h2>
+
+<table class="table table-bordered table-striped">
+
+    <thead class="table-dark">
+    <tr>
+        <th>
+            Item Name
+        </th>
+        <th>
+            Item Price
+        </th>
+        <th>
+            Quantity
+        </th>
+        <th>
+            Amount
+        </th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr th:each= "b:${basket}">
+
+            <td th:text="${b.name}"></td>
+            <td th:text="${b.price}"></td>
+            <td th:text="${b.quantity}"></td>
+            <td th:with="result=${b.price}*${b.quantity}">
+
+                <span th:inline="text">[[${#numbers.formatDecimal(result,0,1)}]]</span>
+            </td>
+
+        </tr>
+
+        <tr>
+            <td colspan="3" style="font-size: 20px;text-align:center">
+                Total Amount
+            </td>
+            <td th:text="${#numbers.formatDecimal(total,0,1)}">
+
+            </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+        <a th:href="@{shop(cust_id=${customer.getCust_id()})}" class="btn btn-dark bill_back">
+            back
+        </a>
+
+    </body>
+    </html>
